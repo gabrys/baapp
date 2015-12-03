@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import pl.beeraddict.baapp.BootstrapApplication;
 import pl.beeraddict.baapp.BootstrapComponent;
 import pl.beeraddict.baapp.BootstrapServiceProvider;
@@ -58,6 +60,7 @@ public class MainActivity extends BootstrapActivity {
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         BootstrapApplication.component().inject(this);
 
         if(isTablet()) {

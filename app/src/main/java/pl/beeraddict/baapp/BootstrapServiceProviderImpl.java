@@ -40,7 +40,7 @@ public class BootstrapServiceProviderImpl implements BootstrapServiceProvider {
     public BootstrapService getService(final Activity activity)
             throws IOException, AccountsException {
         // The call to keyProvider.getAuthKey(...) is what initiates the login screen. Call that now.
-        keyProvider.getAuthKey(activity);
+        //keyProvider.getAuthKey(activity);
 
         return new BootstrapService(restAdapter);
     }
