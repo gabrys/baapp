@@ -4,7 +4,8 @@ package pl.beeraddict.baapp.ui;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.annotation.StringRes;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 
@@ -24,7 +25,11 @@ import pl.beeraddict.baapp.BootstrapApplication;
 import pl.beeraddict.baapp.R;
 import pl.beeraddict.baapp.events.NavItemSelectedEvent;
 import pl.beeraddict.baapp.util.UIUtils;
+
 import com.squareup.otto.Bus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -55,12 +60,21 @@ public class NavigationDrawerFragment extends Fragment {
     private ListView drawerListView;
     private View fragmentContainerView;
 
+    private
+    @StringRes
+    int[] navigationItems = {
+            R.string.baapp_classification,
+            R.string.baapp_about_app,
+    };
+
     private int currentSelectedPosition = 0;
     private boolean fromSavedInstanceState;
     private boolean userLearnedDrawer;
 
-    @Inject protected SharedPreferences prefs;
-    @Inject protected Bus bus;
+    @Inject
+    protected SharedPreferences prefs;
+    @Inject
+    protected Bus bus;
 
 
     public NavigationDrawerFragment() {
@@ -68,6 +82,7 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         BootstrapApplication.component().inject(this);
@@ -87,6 +102,14 @@ public class NavigationDrawerFragment extends Fragment {
 
     }
 
+    private List<String> getNavigationLabels() {
+        List<String> labels = new ArrayList<>();
+        for (int i : navigationItems) {
+            labels.add(getString(i));
+        }
+        return labels;
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -104,14 +127,13 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        drawerListView.setAdapter(new ArrayAdapter<String>(
+
+        drawerListView.setAdapter(new ArrayAdapter<>(
                 getActivity(),
                 R.layout.drawer_list_item,
                 android.R.id.text1,
-                new String[] {
-                        getString(R.string.title_home),
-                        getString(R.string.title_timer)
-                }));
+                getNavigationLabels()
+        ));
         drawerListView.setItemChecked(currentSelectedPosition, true);
         return drawerListView;
     }
@@ -142,10 +164,9 @@ public class NavigationDrawerFragment extends Fragment {
         // between the navigation drawer and the action bar app icon.
         drawerToggle = new ActionBarDrawerToggle(
                 getActivity(),                    /* host Activity */
-                NavigationDrawerFragment.this.drawerLayout,                    /* DrawerLayout object */
-                R.drawable.ic_drawer,             /* nav drawer image to replace 'Up' caret */
-                R.string.navigation_drawer_open,  /* "open drawer" description for accessibility */
-                R.string.navigation_drawer_close  /* "close drawer" description for accessibility */
+                drawerLayout,                     /* DrawerLayout object */
+                R.string.baapp_navigation_drawer_open,  /* "open drawer" description for accessibility */
+                R.string.baapp_navigation_drawer_close  /* "close drawer" description for accessibility */
         ) {
             @Override
             public void onDrawerClosed(View drawerView) {
@@ -201,7 +222,7 @@ public class NavigationDrawerFragment extends Fragment {
             drawerLayout.closeDrawer(fragmentContainerView);
         }
 
-        // Fire the event off to the bus which.
+        // Fire the event off to the bus.
         bus.post(new NavItemSelectedEvent(position));
 
     }
@@ -216,14 +237,14 @@ public class NavigationDrawerFragment extends Fragment {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        if(!isTablet()) {
+        if (!isTablet()) {
             // Forward the new configuration the drawer toggle component.
             drawerToggle.onConfigurationChanged(newConfig);
         }
     }
 
     private boolean isTablet() {
-        if(getActivity() != null) {
+        if (getActivity() != null) {
             return UIUtils.isTablet(getActivity());
         }
         return false;
@@ -257,11 +278,11 @@ public class NavigationDrawerFragment extends Fragment {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setTitle(R.string.app_name);
+        actionBar.setTitle(R.string.baapp_app_name);
     }
 
     private ActionBar getActionBar() {
-        return ((AppCompatActivity)getActivity()).getSupportActionBar();
+        return ((AppCompatActivity) getActivity()).getSupportActionBar();
     }
 
 

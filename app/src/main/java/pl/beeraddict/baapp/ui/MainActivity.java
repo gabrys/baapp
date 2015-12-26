@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.Window;
 
 import com.crashlytics.android.Crashlytics;
+
 import io.fabric.sdk.android.Fabric;
 import pl.beeraddict.baapp.BootstrapApplication;
 import pl.beeraddict.baapp.BootstrapComponent;
@@ -28,6 +29,7 @@ import pl.beeraddict.baapp.core.BootstrapService;
 import pl.beeraddict.baapp.events.NavItemSelectedEvent;
 import pl.beeraddict.baapp.util.SafeAsyncTask;
 import pl.beeraddict.baapp.util.UIUtils;
+
 import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
@@ -38,15 +40,14 @@ import timber.log.Timber;
 
 /**
  * Initial activity for the application.
- *
+ * <p/>
  * If you need to remove the authentication from the application please see
  * {@link pl.beeraddict.baapp.authenticator.ApiKeyProvider#getAuthKey(android.app.Activity)}
  */
 public class MainActivity extends BootstrapActivity {
 
-    @Inject BootstrapServiceProvider serviceProvider;
-
-    private boolean userHasAuthenticated = false;
+    @Inject
+    BootstrapServiceProvider serviceProvider;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle drawerToggle;
@@ -63,7 +64,7 @@ public class MainActivity extends BootstrapActivity {
         Fabric.with(this, new Crashlytics());
         BootstrapApplication.component().inject(this);
 
-        if(isTablet()) {
+        if (isTablet()) {
             setContentView(R.layout.main_activity_tablet);
         } else {
             setContentView(R.layout.main_activity);
@@ -75,7 +76,7 @@ public class MainActivity extends BootstrapActivity {
         // Set up navigation drawer
         title = drawerTitle = getTitle();
 
-        if(!isTablet()) {
+        if (!isTablet()) {
             drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawerToggle = new ActionBarDrawerToggle(
                     this,                    /* Host activity */
@@ -98,7 +99,7 @@ public class MainActivity extends BootstrapActivity {
                 }
             };
 
-            if(!isTablet()) {
+            if (!isTablet()) {
                 drawerToggle.syncState();
             }
 
@@ -118,8 +119,7 @@ public class MainActivity extends BootstrapActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-
-        checkAuth();
+        initScreen();
 
     }
 
@@ -130,49 +130,17 @@ public class MainActivity extends BootstrapActivity {
     @Override
     public void onConfigurationChanged(final Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if(!isTablet()) {
+        if (!isTablet()) {
             drawerToggle.onConfigurationChanged(newConfig);
         }
     }
 
 
     private void initScreen() {
-        if (userHasAuthenticated) {
-
-            final FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, new CarouselFragment())
-                    .commit();
-        }
-
-    }
-
-    private void checkAuth() {
-        new SafeAsyncTask<Boolean>() {
-
-            @Override
-            public Boolean call() throws Exception {
-                final BootstrapService svc = serviceProvider.getService(MainActivity.this);
-                return svc != null;
-            }
-
-            @Override
-            protected void onException(final Exception e) throws RuntimeException {
-                super.onException(e);
-                if (e instanceof OperationCanceledException) {
-                    // User cancelled the authentication process (back button, etc).
-                    // Since auth could not take place, lets finish this activity.
-                    finish();
-                }
-            }
-
-            @Override
-            protected void onSuccess(final Boolean hasAuthenticated) throws Exception {
-                super.onSuccess(hasAuthenticated);
-                userHasAuthenticated = true;
-                initScreen();
-            }
-        }.execute();
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, new CarouselFragment())
+                .commit();
     }
 
     @Override
@@ -204,7 +172,7 @@ public class MainActivity extends BootstrapActivity {
 
         Timber.d("Selected: %1$s", event.getItemPosition());
 
-        switch(event.getItemPosition()) {
+        switch (event.getItemPosition()) {
             case 0:
                 // Home
                 // do nothing as we're already on the home screen.

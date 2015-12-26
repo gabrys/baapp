@@ -2,7 +2,13 @@
 
 <resources>
 
-    <string name="app_name">Beer Addict</string>
+    <string name="baapp_app_name">Beer Addict</string>
+    <string name="baapp_classification">Klasyfikacja piw</string>
+    <string name="baapp_about_app">O aplikacji</string>
+    <string name="baapp_navigation_drawer_open">Otwórz nawigację</string>
+    <string name="baapp_navigation_drawer_close">Zamknij nawigację</string>
+
+
     <string name="content_column">Content</string>
     <string name="page_referrers">Referrers</string>
     <string name="refresh_action">Refresh</string>

@@ -12,7 +12,6 @@ import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 
 import pl.beeraddict.baapp.BootstrapApplication;
-import pl.beeraddict.baapp.DaggerBootstrapComponent;
 import pl.beeraddict.baapp.R;
 import pl.beeraddict.baapp.ui.BootstrapTimerActivity;
 import pl.beeraddict.baapp.util.Strings;
@@ -231,7 +230,7 @@ public class TimerService extends Service {
     private NotificationCompat.Builder getNotificationBuilder(String message, PendingIntent pendingIntent) {
         if(b == null) {
             b = new NotificationCompat.Builder(this)
-                    .setContentTitle(getString(R.string.app_name))
+                    .setContentTitle(getString(R.string.baapp_app_name))
                     .setSmallIcon(R.drawable.ic_stat_ab_notification)
                     .setContentText(message)
                     .setAutoCancel(false)
