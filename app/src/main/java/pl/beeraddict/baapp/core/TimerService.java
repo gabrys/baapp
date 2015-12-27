@@ -13,6 +13,11 @@ import android.support.v4.app.NotificationCompat;
 
 import pl.beeraddict.baapp.BootstrapApplication;
 import pl.beeraddict.baapp.R;
+import pl.beeraddict.baapp.events.PauseTimerEvent;
+import pl.beeraddict.baapp.events.ResumeTimerEvent;
+import pl.beeraddict.baapp.events.StopTimerEvent;
+import pl.beeraddict.baapp.events.TimerPausedEvent;
+import pl.beeraddict.baapp.events.TimerTickEvent;
 import pl.beeraddict.baapp.ui.BootstrapTimerActivity;
 import pl.beeraddict.baapp.util.Strings;
 import pl.beeraddict.baapp.util.TimeUtil;

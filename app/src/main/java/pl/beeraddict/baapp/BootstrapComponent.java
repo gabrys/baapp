@@ -1,6 +1,5 @@
 package pl.beeraddict.baapp;
 
-import pl.beeraddict.baapp.authenticator.BootstrapAuthenticatorActivity;
 import pl.beeraddict.baapp.core.TimerService;
 import pl.beeraddict.baapp.ui.BootstrapActivity;
 import pl.beeraddict.baapp.ui.BootstrapFragmentActivity;
@@ -27,8 +26,6 @@ import dagger.Component;
 public interface BootstrapComponent {
 
     void inject(BootstrapApplication target);
-
-    void inject(BootstrapAuthenticatorActivity target);
 
     void inject(BootstrapTimerActivity target);
 

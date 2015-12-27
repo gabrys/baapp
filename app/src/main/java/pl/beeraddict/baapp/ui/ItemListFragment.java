@@ -26,7 +26,6 @@ import android.widget.TextView;
 import pl.beeraddict.baapp.R;
 import pl.beeraddict.baapp.R.id;
 import pl.beeraddict.baapp.R.layout;
-import pl.beeraddict.baapp.authenticator.LogoutService;
 import pl.beeraddict.baapp.util.SingleTypeAdapter;
 import pl.beeraddict.baapp.util.Toaster;
 import pl.beeraddict.baapp.util.ViewUtils;
@@ -169,17 +168,7 @@ public abstract class ItemListFragment<E> extends Fragment
         }
     }
 
-    protected abstract LogoutService getLogoutService();
-
     private void logout() {
-        getLogoutService().logout(new Runnable() {
-            @Override
-            public void run() {
-                // Calling a refresh will force the service to look for a logged in user
-                // and when it finds none the user will be requested to log in again.
-                forceRefresh();
-            }
-        });
     }
 
     /**

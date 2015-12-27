@@ -74,7 +74,7 @@ public class User implements Serializable {
         if (TextUtils.isEmpty(avatarUrl)) {
             String gravatarId = getGravatarId();
             if (TextUtils.isEmpty(gravatarId))
-                gravatarId = GravatarUtils.getHash(getUsername());
+                gravatarId = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             avatarUrl = getAvatarUrl(gravatarId);
         }
         return avatarUrl;

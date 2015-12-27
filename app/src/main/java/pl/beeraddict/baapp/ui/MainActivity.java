@@ -40,9 +40,6 @@ import timber.log.Timber;
 
 /**
  * Initial activity for the application.
- * <p/>
- * If you need to remove the authentication from the application please see
- * {@link pl.beeraddict.baapp.authenticator.ApiKeyProvider#getAuthKey(android.app.Activity)}
  */
 public class MainActivity extends BootstrapActivity {
 

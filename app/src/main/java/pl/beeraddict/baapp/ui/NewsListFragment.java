@@ -13,7 +13,6 @@ import android.widget.ListView;
 import pl.beeraddict.baapp.BootstrapApplication;
 import pl.beeraddict.baapp.BootstrapServiceProvider;
 import pl.beeraddict.baapp.R;
-import pl.beeraddict.baapp.authenticator.LogoutService;
 import pl.beeraddict.baapp.core.News;
 import pl.beeraddict.baapp.util.SingleTypeAdapter;
 
@@ -28,7 +27,6 @@ import static pl.beeraddict.baapp.core.Constants.Extra.NEWS_ITEM;
 public class NewsListFragment extends ItemListFragment<News> {
 
     @Inject protected BootstrapServiceProvider serviceProvider;
-    @Inject protected LogoutService logoutService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,11 +51,6 @@ public class NewsListFragment extends ItemListFragment<News> {
         getListAdapter()
                 .addHeader(activity.getLayoutInflater()
                         .inflate(R.layout.news_list_item_labels, null));
-    }
-
-    @Override
-    protected LogoutService getLogoutService() {
-        return logoutService;
     }
 
     @Override

@@ -1,14 +1,9 @@
 package pl.beeraddict.baapp;
 
-import android.accounts.AccountManager;
-import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.telephony.TelephonyManager;
 
-import pl.beeraddict.baapp.authenticator.ApiKeyProvider;
-import pl.beeraddict.baapp.authenticator.LogoutService;
-import pl.beeraddict.baapp.authenticator.LogoutServiceImpl;
 import pl.beeraddict.baapp.core.BootstrapService;
 import pl.beeraddict.baapp.core.Constants;
 import pl.beeraddict.baapp.core.PostFromAnyThreadBus;
@@ -40,24 +35,13 @@ public class BootstrapModule {
     }
 
     @Provides
-    @Singleton
-    LogoutService provideLogoutService(final Context context, final AccountManager accountManager) {
-        return new LogoutServiceImpl(context, accountManager);
-    }
-
-    @Provides
     BootstrapService provideBootstrapService(RestAdapter restAdapter) {
         return new BootstrapService(restAdapter);
     }
 
     @Provides
-    BootstrapServiceProvider provideBootstrapServiceProvider(RestAdapter restAdapter, ApiKeyProvider apiKeyProvider) {
-        return new BootstrapServiceProviderImpl(restAdapter, apiKeyProvider);
-    }
-
-    @Provides
-    ApiKeyProvider provideApiKeyProvider(AccountManager accountManager) {
-        return new ApiKeyProvider(accountManager);
+    BootstrapServiceProvider provideBootstrapServiceProvider(RestAdapter restAdapter) {
+        return new BootstrapServiceProviderImpl(restAdapter);
     }
 
     @Provides

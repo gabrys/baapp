@@ -4,9 +4,7 @@ package pl.beeraddict.baapp;
 import android.accounts.AccountsException;
 import android.app.Activity;
 
-import pl.beeraddict.baapp.authenticator.ApiKeyProvider;
 import pl.beeraddict.baapp.core.BootstrapService;
-import pl.beeraddict.baapp.core.UserAgentProvider;
 
 import java.io.IOException;
 
@@ -20,11 +18,9 @@ import retrofit.RestAdapter;
 public class BootstrapServiceProviderImpl implements BootstrapServiceProvider {
 
     private RestAdapter restAdapter;
-    private ApiKeyProvider keyProvider;
 
-    public BootstrapServiceProviderImpl(RestAdapter restAdapter, ApiKeyProvider keyProvider) {
+    public BootstrapServiceProviderImpl(RestAdapter restAdapter) {
         this.restAdapter = restAdapter;
-        this.keyProvider = keyProvider;
     }
 
     /**

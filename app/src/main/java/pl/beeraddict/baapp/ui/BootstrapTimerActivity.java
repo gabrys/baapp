@@ -13,12 +13,12 @@ import android.widget.TextView;
 
 import pl.beeraddict.baapp.BootstrapApplication;
 import pl.beeraddict.baapp.R;
-import pl.beeraddict.baapp.core.PauseTimerEvent;
-import pl.beeraddict.baapp.core.ResumeTimerEvent;
-import pl.beeraddict.baapp.core.StopTimerEvent;
-import pl.beeraddict.baapp.core.TimerPausedEvent;
+import pl.beeraddict.baapp.events.PauseTimerEvent;
+import pl.beeraddict.baapp.events.ResumeTimerEvent;
+import pl.beeraddict.baapp.events.StopTimerEvent;
+import pl.beeraddict.baapp.events.TimerPausedEvent;
 import pl.beeraddict.baapp.core.TimerService;
-import pl.beeraddict.baapp.core.TimerTickEvent;
+import pl.beeraddict.baapp.events.TimerTickEvent;
 import pl.beeraddict.baapp.util.TimeUtil;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;

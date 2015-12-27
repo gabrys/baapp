@@ -13,7 +13,6 @@ import android.widget.ListView;
 import pl.beeraddict.baapp.BootstrapApplication;
 import pl.beeraddict.baapp.BootstrapServiceProvider;
 import pl.beeraddict.baapp.R;
-import pl.beeraddict.baapp.authenticator.LogoutService;
 import pl.beeraddict.baapp.core.CheckIn;
 import pl.beeraddict.baapp.util.SingleTypeAdapter;
 
@@ -26,7 +25,6 @@ import javax.inject.Inject;
 public class CheckInsListFragment extends ItemListFragment<CheckIn> {
 
     @Inject protected BootstrapServiceProvider serviceProvider;
-    @Inject protected LogoutService logoutService;
 
     @Override
     public void onCreate(final Bundle savedInstanceState) {
@@ -44,11 +42,6 @@ public class CheckInsListFragment extends ItemListFragment<CheckIn> {
         getListAdapter()
                 .addHeader(activity.getLayoutInflater()
                         .inflate(R.layout.checkins_list_item_labels, null));
-    }
-
-    @Override
-    protected LogoutService getLogoutService() {
-        return logoutService;
     }
 
     @Override

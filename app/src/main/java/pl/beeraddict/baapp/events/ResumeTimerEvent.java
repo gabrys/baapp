@@ -1,4 +1,4 @@
-package pl.beeraddict.baapp.core;
+package pl.beeraddict.baapp.events;
 
 /**
  * Marker class for resuming a timer through Otto
