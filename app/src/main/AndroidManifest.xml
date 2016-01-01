@@ -17,7 +17,7 @@
         android:theme="@style/Theme.Bootstrap.Dark"
         tools:replace="android:label"> <!-- For ByPass -->
 
-        <activity android:name=".ui.AleActivity">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

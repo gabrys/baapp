@@ -1,177 +1,80 @@
-
-
 package pl.beeraddict.baapp.ui;
 
-
-import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-
-import android.support.v4.app.FragmentManager;
-
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.Window;
-
-import com.crashlytics.android.Crashlytics;
-
-import io.fabric.sdk.android.Fabric;
-import pl.beeraddict.baapp.BeerAddictApp;
-import pl.beeraddict.baapp.BootstrapServiceProvider;
-import pl.beeraddict.baapp.R;
-import pl.beeraddict.baapp.events.NavItemSelectedEvent;
-import pl.beeraddict.baapp.util.UIUtils;
-
-import com.squareup.otto.Subscribe;
+import android.support.v7.app.AppCompatActivity;
+import android.text.method.LinkMovementMethod;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import timber.log.Timber;
+import in.uncod.android.bypass.Bypass;
+import pl.beeraddict.baapp.R;
+import pl.beeraddict.baapp.di.DaggerHelper;
 
+public class MainActivity extends AppCompatActivity {
+    @Bind(R.id.ale_title)
+    protected TextView title;
 
-/**
- * Initial activity for the application.
- */
-public class MainActivity extends BootstrapActivity {
+    @Bind(R.id.ale_content)
+    protected TextView content;
+
+    @Bind(R.id.drawer_layout)
+    protected DrawerLayout drawerLayout;
 
     @Inject
-    BootstrapServiceProvider serviceProvider;
-
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle drawerToggle;
-    private CharSequence drawerTitle;
-    private CharSequence title;
-    private NavigationDrawerFragment navigationDrawerFragment;
+    protected Bypass bypass;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
-        ((BeerAddictApp) getApplication()).getComponent().inject(this);
 
-        if (isTablet()) {
-            setContentView(R.layout.main_activity_tablet);
-        } else {
-            setContentView(R.layout.main_activity);
-        }
+        DaggerHelper.getComponent(this).inject(this);
 
-        // View injection with Butterknife
+        setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
 
-        // Set up navigation drawer
-        title = drawerTitle = getTitle();
+        setupDrawerToggle();
 
-        if (!isTablet()) {
-            drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawerToggle = new ActionBarDrawerToggle(
-                    this,                    /* Host activity */
-                    drawerLayout,           /* DrawerLayout object */
-                    R.string.navigation_drawer_open,    /* "open drawer" description */
-                    R.string.navigation_drawer_close) { /* "close drawer" description */
-
-                /** Called when a drawer has settled in a completely closed state. */
-                public void onDrawerClosed(View view) {
-                    getSupportActionBar().setTitle(title);
-                    invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-                    syncState();
-                }
-
-                /** Called when a drawer has settled in a completely open state. */
-                public void onDrawerOpened(View drawerView) {
-                    getSupportActionBar().setTitle(drawerTitle);
-                    invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-                    syncState();
-                }
-            };
-
-            if (!isTablet()) {
-                drawerToggle.syncState();
-            }
-
-            // Set the drawer toggle as the DrawerListener
-            drawerLayout.setDrawerListener(drawerToggle);
-
-            navigationDrawerFragment = (NavigationDrawerFragment)
-                    getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-
-            // Set up the drawer.
-//            navigationDrawerFragment.setUp(
-//                    R.id.navigation_drawer,
-//                    (DrawerLayout) findViewById(R.id.drawer_layout));
-        }
-
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        initScreen();
+        CharSequence text = bypass.markdownToSpannable("#Header sizes\n" +
+                "##Smaller header\n" +
+                "###Even smaller header\n" +
+                "###Even smaller header\n" +
+                "###Even smaller header\n" +
+                "###Even smaller header\n" +
+                "###Even smaller header\n" +
+                "\n" +
+                "Paragraphs are obviously supported along with all the fancy text styling you could want.\n" +
+                "There is *italic*, **bold** and ***bold italic***. Even links are supported, visit the\n" +
+                "github page for Bypass [github](http://www.github.com/).\n" +
+                "\n" +
+                "* Nested List\n" +
+                "\t* One\n" +
+                "\t* Two\n" +
+                "\t* Three\n" +
+                "* One\n" +
+                "\t* One\n" +
+                "\t* Two\n" +
+                "\t* Three\n" +
+                "\n" +
+                "## Code Block Support\n" +
+                "\n" +
+                "    const char* str;\n" +
+                "    str = env->GetStringUTFChars(markdown, NULL);");
 
+        content.setText(text);
+        content.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
-    private boolean isTablet() {
-        return UIUtils.isTablet(this);
-    }
+    private void setupDrawerToggle() {
+        NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment)
+                getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
-    @Override
-    public void onConfigurationChanged(final Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if (!isTablet()) {
-            drawerToggle.onConfigurationChanged(newConfig);
-        }
-    }
-
-
-    private void initScreen() {
-        final FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, new CarouselFragment())
-                .commit();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(final MenuItem item) {
-
-        if (!isTablet() && drawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                //menuDrawer.toggleMenu();
-                return true;
-            case R.id.timer:
-                navigateToTimer();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void navigateToTimer() {
-        final Intent i = new Intent(this, BootstrapTimerActivity.class);
-        startActivity(i);
-    }
-
-    @Subscribe
-    public void onNavigationItemSelected(NavItemSelectedEvent event) {
-
-        Timber.d("Selected: %1$s", event.getItemPosition());
-
-        switch (event.getItemPosition()) {
-            case 0:
-                // Home
-                // do nothing as we're already on the home screen.
-                break;
-            case 1:
-                // Timer
-                navigateToTimer();
-                break;
-        }
+        drawerFragment.setUp(drawerFragment.getView(), drawerLayout);
     }
 }

@@ -1,17 +1,13 @@
 package pl.beeraddict.baapp;
 
-import android.app.Application;
-
-import dagger.Module;
-import dagger.Provides;
+import pl.beeraddict.baapp.di.BeerAddictComponent;
+import pl.beeraddict.baapp.di.DaggerHelper;
 import timber.log.Timber;
 
 /**
  * Beer Addict application
- * (Also a dagger module injecting itself as an Android app)
  */
-@Module
-public class BeerAddictApp extends Application {
+public class BeerAddictApp extends android.app.Application {
 
     private BeerAddictComponent component;
 
@@ -20,19 +16,10 @@ public class BeerAddictApp extends Application {
         super.onCreate();
 
         Timber.plant(new Timber.DebugTree());
-        component = DaggerBeerAddictComponent.builder()
-                .beerAddictApp(this)
-                .androidModule(new AndroidModule())
-                .bootstrapModule(new BootstrapModule())
-                .build();
+        component = DaggerHelper.buildComponent(this);
     }
 
     public BeerAddictComponent getComponent() {
         return component;
-    }
-
-    @Provides
-    public Application getInstance() {
-        return this;
     }
 }

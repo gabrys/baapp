@@ -23,6 +23,7 @@ import android.widget.ListView;
 
 import pl.beeraddict.baapp.BeerAddictApp;
 import pl.beeraddict.baapp.R;
+import pl.beeraddict.baapp.di.DaggerHelper;
 import pl.beeraddict.baapp.events.NavItemSelectedEvent;
 import pl.beeraddict.baapp.util.UIUtils;
 
@@ -85,7 +86,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
 
-        ((BeerAddictApp) getActivity().getApplication()).getComponent().inject(this);
+        DaggerHelper.getComponent(this).inject(this);
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
