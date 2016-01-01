@@ -21,7 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import pl.beeraddict.baapp.BootstrapApplication;
+import pl.beeraddict.baapp.BeerAddictApp;
 import pl.beeraddict.baapp.R;
 import pl.beeraddict.baapp.events.NavItemSelectedEvent;
 import pl.beeraddict.baapp.util.UIUtils;
@@ -85,7 +85,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
 
-        BootstrapApplication.component().inject(this);
+        ((BeerAddictApp) getActivity().getApplication()).getComponent().inject(this);
 
         // Read in the flag indicating whether or not the user has demonstrated awareness of the
         // drawer. See PREF_USER_LEARNED_DRAWER for details.
@@ -145,11 +145,11 @@ public class NavigationDrawerFragment extends Fragment {
     /**
      * Users of this fragment must call this method to set up the navigation drawer interactions.
      *
-     * @param fragmentId   The android:id of this fragment in its activity's layout.
+     * @param fragmentView The android:id of this fragment in its activity's layout.
      * @param drawerLayout The DrawerLayout containing this fragment's UI.
      */
-    public void setUp(int fragmentId, DrawerLayout drawerLayout) {
-        fragmentContainerView = getActivity().findViewById(fragmentId);
+    public void setUp(View fragmentView, DrawerLayout drawerLayout) {
+        fragmentContainerView = fragmentView;
         this.drawerLayout = drawerLayout;
 
         // set a custom shadow that overlays the main content when the drawer opens
@@ -263,7 +263,7 @@ public class NavigationDrawerFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (!isTablet() && drawerToggle.onOptionsItemSelected(item)) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
 
@@ -277,7 +277,6 @@ public class NavigationDrawerFragment extends Fragment {
     private void showGlobalContextActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setTitle(R.string.baapp_app_name);
     }
 

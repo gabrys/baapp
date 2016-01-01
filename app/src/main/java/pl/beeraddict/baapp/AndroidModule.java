@@ -1,6 +1,7 @@
 package pl.beeraddict.baapp;
 
 import android.accounts.AccountManager;
+import android.app.Application;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -24,8 +25,8 @@ public class AndroidModule {
 
     @Provides
     @Singleton
-    Context provideAppContext() {
-        return BootstrapApplication.getInstance().getApplicationContext();
+    Context provideContext(Application app) {
+        return app.getApplicationContext();
     }
 
     @Provides

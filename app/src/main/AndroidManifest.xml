@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="pl.beeraddict.baapp">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="pl.beeraddict.baapp">
 
     <!-- TODO: figure out which are really needed -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -10,40 +11,19 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
     <application
-        android:name=".BootstrapApplicationImpl"
+        android:name=".BeerAddictApp"
         android:icon="@drawable/icon"
         android:label="@string/baapp_app_name"
-        android:theme="@style/Theme.Bootstrap.Dark">
+        android:theme="@style/Theme.Bootstrap.Dark"
+        tools:replace="android:label"> <!-- For ByPass -->
 
-        <activity
-            android:name=".ui.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/baapp_app_name">
+        <activity android:name=".ui.AleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.BootstrapTimerActivity"
-                  android:configChanges="orientation|keyboardHidden|screenSize"
-                  android:label="@string/baapp_app_name"
-                  android:launchMode="singleTop"
-                  android:parentActivityName="pl.beeraddict.baapp.ui.MainActivity" >
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <!-- Both parent activity attributes have to contain the full package name -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="pl.beeraddict.baapp.ui.MainActivity" />
-        </activity>
-
-        <service android:name=".core.TimerService" android:enabled="true" android:exported="false" />
-
-        <activity android:name=".ui.NewsActivity" />
-        <activity android:name=".ui.UserActivity" android:label="@string/baapp_app_name" />
 
         <!-- Replace with your Fabric Crashlytics key from Fabric.io -->
         <meta-data

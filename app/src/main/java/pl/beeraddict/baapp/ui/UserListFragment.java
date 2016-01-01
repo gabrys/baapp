@@ -8,7 +8,7 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListView;
 
-import pl.beeraddict.baapp.BootstrapApplication;
+import pl.beeraddict.baapp.BeerAddictApp;
 import pl.beeraddict.baapp.BootstrapServiceProvider;
 import pl.beeraddict.baapp.R;
 import pl.beeraddict.baapp.core.User;
@@ -29,7 +29,7 @@ public class UserListFragment extends ItemListFragment<User> {
     @Override
     public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BootstrapApplication.component().inject(this);
+        ((BeerAddictApp) getActivity().getApplication()).getComponent().inject(this);
     }
 
     @Override

@@ -2,8 +2,6 @@
 
 package pl.beeraddict.baapp.ui;
 
-import android.accounts.OperationCanceledException;
-
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -13,7 +11,6 @@ import android.support.v4.app.FragmentManager;
 
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -21,13 +18,10 @@ import android.view.Window;
 import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
-import pl.beeraddict.baapp.BootstrapApplication;
-import pl.beeraddict.baapp.BootstrapComponent;
+import pl.beeraddict.baapp.BeerAddictApp;
 import pl.beeraddict.baapp.BootstrapServiceProvider;
 import pl.beeraddict.baapp.R;
-import pl.beeraddict.baapp.core.BootstrapService;
 import pl.beeraddict.baapp.events.NavItemSelectedEvent;
-import pl.beeraddict.baapp.util.SafeAsyncTask;
 import pl.beeraddict.baapp.util.UIUtils;
 
 import com.squareup.otto.Subscribe;
@@ -59,7 +53,7 @@ public class MainActivity extends BootstrapActivity {
 
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
-        BootstrapApplication.component().inject(this);
+        ((BeerAddictApp) getApplication()).getComponent().inject(this);
 
         if (isTablet()) {
             setContentView(R.layout.main_activity_tablet);
@@ -107,9 +101,9 @@ public class MainActivity extends BootstrapActivity {
                     getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
             // Set up the drawer.
-            navigationDrawerFragment.setUp(
-                    R.id.navigation_drawer,
-                    (DrawerLayout) findViewById(R.id.drawer_layout));
+//            navigationDrawerFragment.setUp(
+//                    R.id.navigation_drawer,
+//                    (DrawerLayout) findViewById(R.id.drawer_layout));
         }
 
 

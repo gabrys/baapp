@@ -11,7 +11,8 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 
-import pl.beeraddict.baapp.BootstrapApplication;
+import pl.beeraddict.baapp.BeerAddictApp;
+import pl.beeraddict.baapp.ComponentProvider;
 import pl.beeraddict.baapp.R;
 import pl.beeraddict.baapp.events.PauseTimerEvent;
 import pl.beeraddict.baapp.events.ResumeTimerEvent;
@@ -56,7 +57,7 @@ public class TimerService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        BootstrapApplication.component().inject(this);
+        ((BeerAddictApp) getApplication()).getComponent().inject(this);
 
         // Register the bus so we can send notifications.
         eventBus.register(this);

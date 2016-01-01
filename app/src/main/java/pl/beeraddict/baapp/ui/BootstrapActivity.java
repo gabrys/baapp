@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import pl.beeraddict.baapp.BootstrapApplication;
 import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+import pl.beeraddict.baapp.BeerAddictApp;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
@@ -20,13 +20,14 @@ import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
  */
 public abstract class BootstrapActivity extends AppCompatActivity {
 
-    @Inject protected Bus bus;
+    @Inject
+    protected Bus bus;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        BootstrapApplication.component().inject(this);
+//        ((BeerAddictApp) getApplication()).getComponent().inject(this);
     }
 
     @Override

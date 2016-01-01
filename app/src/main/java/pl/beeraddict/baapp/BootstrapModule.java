@@ -1,15 +1,10 @@
 package pl.beeraddict.baapp;
 
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.telephony.TelephonyManager;
 
-import pl.beeraddict.baapp.core.BootstrapService;
-import pl.beeraddict.baapp.core.Constants;
-import pl.beeraddict.baapp.core.PostFromAnyThreadBus;
-import pl.beeraddict.baapp.core.RestAdapterRequestInterceptor;
-import pl.beeraddict.baapp.core.RestErrorHandler;
-import pl.beeraddict.baapp.core.UserAgentProvider;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.otto.Bus;
@@ -18,6 +13,13 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import in.uncod.android.bypass.Bypass;
+import pl.beeraddict.baapp.core.BootstrapService;
+import pl.beeraddict.baapp.core.Constants;
+import pl.beeraddict.baapp.core.PostFromAnyThreadBus;
+import pl.beeraddict.baapp.core.RestAdapterRequestInterceptor;
+import pl.beeraddict.baapp.core.RestErrorHandler;
+import pl.beeraddict.baapp.core.UserAgentProvider;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
@@ -87,4 +89,8 @@ public class BootstrapModule {
                 .build();
     }
 
+    @Provides
+    Bypass provideBypass(Context context) {
+        return new Bypass(context);
+    }
 }

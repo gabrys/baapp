@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import pl.beeraddict.baapp.BootstrapApplication;
+import pl.beeraddict.baapp.BeerAddictApp;
 import pl.beeraddict.baapp.R;
 import pl.beeraddict.baapp.events.PauseTimerEvent;
 import pl.beeraddict.baapp.events.ResumeTimerEvent;
@@ -44,7 +44,7 @@ public class BootstrapTimerActivity extends BootstrapFragmentActivity implements
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        BootstrapApplication.component().inject(this);
+        ((BeerAddictApp) getApplication()).getComponent().inject(this);
 
         setContentView(R.layout.bootstrap_timer);
 

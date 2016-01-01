@@ -3,7 +3,8 @@ package pl.beeraddict.baapp.ui;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import pl.beeraddict.baapp.BootstrapApplication;
+import pl.beeraddict.baapp.BeerAddictApp;
+
 import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
@@ -22,7 +23,7 @@ public class BootstrapFragmentActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        BootstrapApplication.component().inject(this);
+        ((BeerAddictApp) getApplication()).getComponent().inject(this);
     }
 
     @Override

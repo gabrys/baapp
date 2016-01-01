@@ -45,9 +45,6 @@ public class BootstrapPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 result = new UserListFragment();
                 break;
-            case 2:
-                result = new CheckInsListFragment();
-                break;
             default:
                 result = null;
                 break;

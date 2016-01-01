@@ -10,7 +10,7 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.ListView;
 
-import pl.beeraddict.baapp.BootstrapApplication;
+import pl.beeraddict.baapp.BeerAddictApp;
 import pl.beeraddict.baapp.BootstrapServiceProvider;
 import pl.beeraddict.baapp.R;
 import pl.beeraddict.baapp.core.News;
@@ -22,8 +22,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import static pl.beeraddict.baapp.core.Constants.Extra.NEWS_ITEM;
-
 public class NewsListFragment extends ItemListFragment<News> {
 
     @Inject protected BootstrapServiceProvider serviceProvider;
@@ -31,7 +29,7 @@ public class NewsListFragment extends ItemListFragment<News> {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BootstrapApplication.component().inject(this);
+        ((BeerAddictApp) getActivity().getApplication()).getComponent().inject(this);
     }
 
     @Override
@@ -92,7 +90,7 @@ public class NewsListFragment extends ItemListFragment<News> {
     public void onListItemClick(ListView l, View v, int position, long id) {
         News news = ((News) l.getItemAtPosition(position));
 
-        startActivity(new Intent(getActivity(), NewsActivity.class).putExtra(NEWS_ITEM, news));
+        startActivity(new Intent(getActivity(), AleActivity.class));
     }
 
     @Override
